@@ -15,8 +15,6 @@
     * ID/PW 필드
     * 로그인 버튼을 눌렀을 때 로그가 남도록
 
-![login_view](images/login_view.png)
- 
 * 필수 해결실마리
     * Auto layout, UITextField, UIButton, UIImageView, Assets
 * 선택 해결실마리
