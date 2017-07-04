@@ -105,26 +105,26 @@ for (space, name) in nameByParkingSpace {
 
 /// 열거형은 값의 집합으로 이루어진 타입! 원시 값을 가질 수 있다.
 enum PieType: Int {
-    case Apple = 0
-    case Cherry
-    case Pecan
+    case apple = 0
+    case cherry
+    case pecan
 }
 
 /// 열거형의 원시값은 옵셔널
-let pieRawValue = PieType.Pecan.rawValue
+let pieRawValue = PieType.pecan.rawValue
 
 if let pieType = PieType(rawValue: pieRawValue) {
 }
 
-let favoritePie = PieType.Apple
+let favoritePie = PieType.apple
 let name: String
 
 switch favoritePie {
-case .Apple:
+case .apple:
     name = "Apple"
-case .Cherry:
+case .cherry:
     name = "Cherry"
-case .Pecan:
+case .pecan:
     name = "Pecan"
 }
 
