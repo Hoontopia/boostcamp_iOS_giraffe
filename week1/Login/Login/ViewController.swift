@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     /// A Text field containing id
     @IBOutlet weak var idField: UITextField!
@@ -16,22 +16,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        idField.delegate = self
+        passwordField.delegate = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
     }
     
     /// Run when touching the Sign In button
     @IBAction func touchSignIn(sender: UIButton){
         print("touch up inside - sign in")
-        
+    
         /// Return if none of the ID and password are entered
         guard let id: String = idField.text, let password: String = passwordField.text, idField.hasText, passwordField.hasText else {
-            
             return
         }
         
