@@ -28,11 +28,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func showNextQuestion(sender: AnyObject) {
-        /// ++currentQuestionIndex에서 문법 중 증감연산자 삭제로 인한 변경
+        /*
+        // ++currentQuestionIndex에서 문법 중 증감연산자 삭제로 인한 변경
+        // 좀 더 간략하게 구현 해보려면?
+         
         currentQuestionIndex += 1
         if currentQuestionIndex == questions.count {
             currentQuestionIndex = 0
-        }
+        } */
+        
+        // 삼항 연산자 사용
+        let nextQuestionIndex = currentQuestionIndex + 1
+        currentQuestionIndex = nextQuestionIndex != questions.count ? nextQuestionIndex : 0
+        
         let question: String = questions[currentQuestionIndex]
         questionLabel.text = question
         answerLabel.text = "???"
