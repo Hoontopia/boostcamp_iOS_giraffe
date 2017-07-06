@@ -35,12 +35,16 @@ class ViewController: UIViewController {
         currentQuestionIndex += 1
         if currentQuestionIndex == questions.count {
             currentQuestionIndex = 0
-        } */
+        }
         
         // 삼항 연산자 사용
         let nextQuestionIndex = currentQuestionIndex + 1
         currentQuestionIndex = nextQuestionIndex != questions.count ? nextQuestionIndex : 0
+        // 더 간략하게..?
+        */
         
+        // 나머지 연산자 사용
+        currentQuestionIndex = (currentQuestionIndex + 1) % questions.count
         let question: String = questions[currentQuestionIndex]
         questionLabel.text = question
         answerLabel.text = "???"
