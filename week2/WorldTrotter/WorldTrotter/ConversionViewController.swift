@@ -9,9 +9,8 @@
 import UIKit
 
 struct BackgroundColor {
-    static let lightColor: UIColor = UIColor(red: 245.0, green: 244.0, blue: 241.0, alpha: 1.0)
-    // RGB 각각 다르게 주면 적용 안됌..
-    static let darkColor: UIColor = UIColor(red: 50.0, green: 100.0, blue: 0, alpha: 1.0)
+    static let lightColor: UIColor = UIColor(red: 245/255, green: 244/255, blue: 241/255, alpha: 1.0)
+    static let darkColor: UIColor = UIColor(red: 50/255, green: 100/255, blue: 0, alpha: 1.0)
 }
 
 class ConversionViewController: UIViewController, UITextFieldDelegate {
@@ -24,7 +23,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         
         print("ConversionViewController loaded its view.")
     }
-    //왜 안바뀔까
+  
     override func viewWillAppear(_ animated: Bool) {
         if self.view.backgroundColor == BackgroundColor.lightColor {
             view.backgroundColor = BackgroundColor.darkColor
@@ -73,7 +72,8 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         } */
         
         /// 텍스트에 내용이 있는지, 값이 Double로 변환 가능한지
-        if let fahrenheitFromText = textField.text, let fahrenheitValue = Double(fahrenheitFromText) {
+        if let fahrenheitFromText = textField.text,
+            let fahrenheitValue = Double(fahrenheitFromText) {
             self.fahrenheitValue = fahrenheitValue
         }
         else {
@@ -92,8 +92,8 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         let replacementTextHasAlphabet = string.rangeOfCharacter(from: letters)
         
         /// 현재 텍스트에 '.'이 있고 새로운 문자열에 '.'이 있을 경우 또는 새로운 문자열이 알파벳인 경우 입력 하지 않음!
-        if (existingTextHasDecimalSeparator != nil && replacementTextHasDecimalSeparator != nil) ||
-            replacementTextHasAlphabet != nil {
+        if (existingTextHasDecimalSeparator != nil && replacementTextHasDecimalSeparator != nil)
+            || replacementTextHasAlphabet != nil {
             return false
         }
         else {
