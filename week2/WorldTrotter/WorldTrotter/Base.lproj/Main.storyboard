@@ -90,21 +90,17 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1841" y="-210"/>
+            <point key="canvasLocation" x="1918" y="-536"/>
         </scene>
         <!--Map-->
         <scene sceneID="5c6-XL-dPY">
             <objects>
                 <viewController id="jAy-Qs-G8k" customClass="MapViewController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
-                    <mapView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="J1I-fQ-X84">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </mapView>
                     <tabBarItem key="tabBarItem" title="Map" image="MapIcon" id="S9L-7d-ld9"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8OD-DK-Obk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1814" y="501"/>
+            <point key="canvasLocation" x="1918" y="124"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="9mb-vO-snz">
@@ -119,11 +115,22 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="7bd-wc-ncp"/>
                         <segue destination="jAy-Qs-G8k" kind="relationship" relationship="viewControllers" id="rLf-aY-Xhm"/>
+                        <segue destination="lQt-vb-Cs0" kind="relationship" relationship="viewControllers" id="jiJ-al-apS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UOK-Vz-0Ce" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="845.60000000000002" y="123.68815592203899"/>
+        </scene>
+        <!--Web-->
+        <scene sceneID="wQm-ZR-e4j">
+            <objects>
+                <viewController id="lQt-vb-Cs0" customClass="WebViewController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Web" image="MapIcon" id="b6U-l9-JYt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eCo-LF-eOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1918" y="887"/>
         </scene>
     </scenes>
     <resources>
