@@ -10,14 +10,15 @@ import UIKit
 import MapKit
 import CoreLocation
 
-// MARK: 위치 위/경도 구조체
+// MARK: Structs
+// 위치 위/경도 구조체
 struct LocationPoints {
     static let livingPlacePoint = CLLocationCoordinate2D(latitude: 37.496922, longitude: 127.028620)
     static let favoritePlacePoint = CLLocationCoordinate2D(latitude: 37.340139, longitude: 126.733424)
     static let birthPlacePoint = CLLocationCoordinate2D(latitude: 37.501477, longitude: 127.004417)
 }
 
-// MARK: 위치 명 구조체
+// 위치 명 구조체
 struct LocationNames {
     static let livingPlaceName: String = "현재 있는 곳 : 강남"
     static let favoritePlaceName: String = "좋아 하는 곳 : 학교"
@@ -26,6 +27,7 @@ struct LocationNames {
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    // MARK: Properties
     var mapView: MKMapView!
     let locationManager = CLLocationManager()
     var annotationIsSet: Bool = false
@@ -37,6 +39,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.delegate = self
         view = mapView
         
+        setMapShapeOptionControl()
+        setCurrentLocationPutton()
+        setPinButton()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print("MapViewController loaded its view.")
+    }
+    
+    // MARK: View Layout Methods
+    func setMapShapeOptionControl() {
         let mapShapeOption: [String] = ["Standard", "Hybrid", "Satellite"]
         let mapShapeOptionControl = UISegmentedControl(items: mapShapeOption)
         
@@ -47,7 +62,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapShapeOptionControl.translatesAutoresizingMaskIntoConstraints = false
         
         mapShapeOptionControl.addTarget(self, action: #selector(mapTypeChanged(segControl:)), for: .valueChanged)
+        view.addSubview(mapShapeOptionControl)
         
+        addConstraintTo(mapShapeOptionControl: mapShapeOptionControl)
+    }
+    
+    func setCurrentLocationPutton() {
         // 코드로 현재 위치 버튼 추가
         let currentLocationButton: UIButton = UIButton(type: UIButtonType.roundedRect)
         currentLocationButton.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
@@ -56,7 +76,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         currentLocationButton.translatesAutoresizingMaskIntoConstraints = false
         
         currentLocationButton.addTarget(self, action: #selector(zoomToCurruntLocation), for: .touchUpInside)
+        view.addSubview(currentLocationButton)
         
+        addConstraintTo(currentLocationButton: currentLocationButton)
+    }
+    
+    func setPinButton() {
         // 코드로 핀 표시 버튼 추가
         let pinButton: UIButton = UIButton(type: UIButtonType.roundedRect)
         pinButton.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
@@ -65,56 +90,42 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         pinButton.translatesAutoresizingMaskIntoConstraints = false
         pinButton.addTarget(self, action: #selector(tappedPinButton), for: .touchUpInside)
         
-        view.addSubview(mapShapeOptionControl)
-        view.addSubview(currentLocationButton)
         view.addSubview(pinButton)
-        
-        let margins = view.layoutMarginsGuide
-        
-        // 현재 위치 버튼 제약 조건
-        let leadingOfCurrentLocationButton = currentLocationButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor)
-        let bottomOfCurrentLocationButton = currentLocationButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor)
-        let widthOfCurrentLocationButton = currentLocationButton.widthAnchor.constraint(equalToConstant: currentLocationButton.bounds.width)
-        let heightOfCurrentLocationButton = currentLocationButton.heightAnchor.constraint(equalToConstant: currentLocationButton.bounds.height)
-        
-        
+        addConstraintTo(pinButton: pinButton)
+    }
+    
+    func addConstraintTo(mapShapeOptionControl: UISegmentedControl) {
         /* let topConstraint = segmentedControl.topAnchor.constraint(equalTo: view.topAnchor)
-        let leadingConstraint = segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        let trailingConstraint = segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor) */
+         let leadingConstraint = segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+         let trailingConstraint = segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor) */
         
         // 맵 형태 선택 세그먼트 컨트롤 제약 조건
-        let topOfMapShapeOptionControl = mapShapeOptionControl.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 8)
-        let leadingOfMapShapeOptionControl = mapShapeOptionControl.leadingAnchor.constraint(equalTo: margins.leadingAnchor)
-        let trailingOfMapShapeOptionControl = mapShapeOptionControl.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
-        
+        let margins = view.layoutMarginsGuide
+        mapShapeOptionControl.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 8).isActive = true
+        mapShapeOptionControl.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        mapShapeOptionControl.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+    }
+    
+    func addConstraintTo(pinButton: UIButton) {
         // 핀 버튼 제약 조건
-        let trailingOfPinButton = pinButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
-        let bottomOfPinButton = pinButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor)
-        // 너비와 폭은 현재위치 버튼과 같게
-        let widthOfPinButton = NSLayoutConstraint(item: pinButton, attribute: .width, relatedBy: .equal, toItem: currentLocationButton, attribute: .width, multiplier: 1.0, constant: 0.0)
-        let heightOfPinButton = NSLayoutConstraint(item: pinButton, attribute: .height, relatedBy: .equal, toItem: currentLocationButton, attribute: .height, multiplier: 1.0, constant: 0.0)
-        
-        // 제약조건 활성화
-        topOfMapShapeOptionControl.isActive = true
-        leadingOfMapShapeOptionControl.isActive = true
-        trailingOfMapShapeOptionControl.isActive = true
-        leadingOfCurrentLocationButton.isActive = true
-        bottomOfCurrentLocationButton.isActive = true
-        widthOfCurrentLocationButton.isActive = true
-        heightOfCurrentLocationButton.isActive = true
-        trailingOfPinButton.isActive = true
-        bottomOfPinButton.isActive = true
-        widthOfPinButton.isActive = true
-        heightOfPinButton.isActive = true
+        let margins = view.layoutMarginsGuide
+        pinButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+        pinButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
+        pinButton.widthAnchor.constraint(equalToConstant: pinButton.bounds.width).isActive = true
+        pinButton.heightAnchor.constraint(equalToConstant: pinButton.bounds.height).isActive = true
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        print("MapViewController loaded its view.")
+    func addConstraintTo(currentLocationButton: UIButton) {
+        // 현재 위치 버튼 제약 조건
+        let margins = view.layoutMarginsGuide
+        currentLocationButton.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        currentLocationButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
+        currentLocationButton.widthAnchor.constraint(equalToConstant: currentLocationButton.bounds.width).isActive = true
+        currentLocationButton.heightAnchor.constraint(equalToConstant: currentLocationButton.bounds.height).isActive = true
     }
     
-    // MARK: 맵 타입 선택 세그먼트 컨트롤 값 변경 시 액션
+    // MARK: Control Actions
+    // 맵 타입 선택 세그먼트 컨트롤 값 변경 시 액션
     func mapTypeChanged(segControl: UISegmentedControl) {
         switch segControl.selectedSegmentIndex {
         case 0:
@@ -128,13 +139,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    // MARK: 현재위치 버튼 탭할 시 액션
+    // 현재위치 버튼 탭할 시 액션
     func zoomToCurruntLocation() {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
     }
     
-    // MARK: 핀 버튼 탭할 시 액션
+    // 핀 버튼 탭할 시 액션
     func tappedPinButton() {
         // 어노테이션 셋팅 안되어있으면 셋팅
         if !annotationIsSet {
@@ -159,7 +170,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    // MARK: 현재위치 업데이트 시 호출되는 델리게이트 메소드
+    // MARK: Delegate Methods
+    // 현재위치 업데이트 시 호출되는 델리게이트 메소드
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let current = locations.first else {
             return
