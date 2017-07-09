@@ -30,6 +30,7 @@ import UIKit
             updateButtonSelectionStates()
         }
     }
+    
     //MARK: Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -107,6 +108,7 @@ import UIKit
     
     private func updateButtonSelectionStates() {
         for (index, button) in ratingButtons.enumerated() {
+            // rating 미만 인덱스의 버튼은 모두 셀렉트 처리
             button.isSelected = index < rating
             
             let hintString: String?
