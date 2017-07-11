@@ -16,8 +16,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordField: UITextField!
     
     override func viewDidLoad() {
+        /*
+        // 인터페이스 빌더로
         idField.delegate = self
         passwordField.delegate = self
+        */
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -33,15 +36,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Return if none of the ID and password are entered
         // guard 구문을 다른 사람이 보기 좋도록..?
 
-        guard let id = idField.text,
-            let password = passwordField.text,
-            !id.isEmpty,
-            !password.isEmpty
-            else { return }
+        guard let id = idField.text, let password = passwordField.text
+        else { return }
+        
+        guard !id.isEmpty, !password.isEmpty
+        else { return }
         
         // print("ID : " + id + ", " + "PW : " + password)
         // 문자열을 합치는 다른 방법?
-        
         print("ID : \(id), PW : \(password)")
     }
     

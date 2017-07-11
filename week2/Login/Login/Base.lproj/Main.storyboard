@@ -38,12 +38,18 @@
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="7Oy-km-8Zj"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8IC-sd-eeN">
                                                 <rect key="frame" x="0.0" y="38" width="187.5" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="839-cd-PD9"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -51,14 +57,14 @@
                                         <rect key="frame" x="0.0" y="76" width="187.5" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QxN-0u-MTN">
-                                                <rect key="frame" x="0.0" y="0.0" width="93.5" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="94" height="30"/>
                                                 <state key="normal" title="Sign In"/>
                                                 <connections>
                                                     <action selector="touchSignInSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bnz-S7-GPK"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIl-gE-idm">
-                                                <rect key="frame" x="93.5" y="0.0" width="94" height="30"/>
+                                                <rect key="frame" x="94" y="0.0" width="93.5" height="30"/>
                                                 <state key="normal" title="Sign Up">
                                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>

@@ -46,11 +46,10 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     }
     
     @IBAction func touchSignUp(_ sender: UIButton) {
-        guard let password: String = password,
-            let checkPass: String = checkPassword,
-            !password.isEmpty,
-            !checkPass.isEmpty
-        else {
+        guard let password: String = password, let checkPass: String = checkPassword
+            else { return }
+        
+        guard !password.isEmpty, !checkPass.isEmpty else {
             print("항목을 모두 입력 해주세요")
             return
         }
@@ -86,9 +85,16 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // 편집된 이미지를 저장할 이미지로 선택
         guard let selectedImage = info[UIImagePickerControllerEditedImage] as? UIImage else {
-            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+            /*
+            // 경고 Alert 출력
+            let cautionAlert = UIAlertController(title: "오류", message: "선택된 사진이 없습니다.", preferredStyle: .alert)
+            cautionAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            self.present(cautionAlert, animated: true, completion: nil)
+             // whose view is not in the window hierarchy! 에러 발생
+            */
+            print("선택된 사진이 없습니다.")
+            return
         }
-        
         profileImageView.backgroundColor = nil
         profileImageView.image = selectedImage
         
