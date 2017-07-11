@@ -17,14 +17,14 @@ struct BackgroundColor {
 } */
 
 struct BackgroundColor {
-    let colorArray: [UIColor]
     let lightColor: UIColor = UIColor(red: 245/255, green: 244/255, blue: 241/255, alpha: 1.0)
     let darkColor: UIColor = UIColor(red: 50/255, green: 100/255, blue: 0, alpha: 1.0)
-    var colorIndex: Int = -1 // getNextColor 첫 호출시 0으로 변경
-    
-    init() {
-        colorArray = [lightColor, darkColor]
+    // init에서 초기화 대신 연산 프로퍼티로 값 초기화
+    var colorArray: [UIColor] {
+        return [lightColor, darkColor]
     }
+    
+    var colorIndex: Int = -1 // getNextColor 첫 호출시 0으로 변경
     
     // 다음 컬러 반환
     mutating func getNextColor() -> UIColor {
