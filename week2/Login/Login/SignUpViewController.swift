@@ -22,10 +22,9 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var checkPassword: String?
     
     override func viewDidLoad() {
-        profileTextView.delegate = self
-        idField.delegate = self
-        passwordField.delegate = self
-        checkPasswordField.delegate = self
+        if id != nil {
+            idField.text = id
+        }
     }
     
     @IBAction func selectProfileImage(_ sender: UITapGestureRecognizer) {
