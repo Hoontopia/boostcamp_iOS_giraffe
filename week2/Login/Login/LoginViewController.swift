@@ -41,7 +41,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
     @IBOutlet weak var loginStackView: UIStackView!
     
     var profileRequest = MyProfileRequest()
-    var userName: String?
+    var userName: String? {
+        didSet {
+            if userName != nil {
+                performSegue(withIdentifier: "signUpSegue", sender: self)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         /*
@@ -58,10 +64,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
         view.addSubview(loginButton) // 제약조건 주기 전에 서브 뷰로 추가 먼저 할 것 !
         
         // 제약조건 추가
-        NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal, toItem: loginStackView, attribute: .bottom, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: loginButton, attribute: .centerX, relatedBy: .equal, toItem: loginStackView, attribute: .centerX, multiplier: 1.0, constant: 0.0).isActive = true
-        
-        getUserProfile()
+        NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal,
+                           toItem: loginStackView, attribute: .bottom,
+                           multiplier: 1.0, constant: 0.0).isActive = true
+        NSLayoutConstraint(item: loginButton, attribute: .centerX, relatedBy: .equal,
+                           toItem: loginStackView, attribute: .centerX,
+                           multiplier: 1.0, constant: 0.0).isActive = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -102,6 +110,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
             
         case .cancelled:
             print("로그인 취소")
+            
         case .failed( _):
             print("로그인 실패")
         }
@@ -136,7 +145,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
         guard userName != nil else { return }
 
         guard let dest = segue.destination as? SignUpViewController else { return }
-        
+    
         dest.id = userName
     }
 }
