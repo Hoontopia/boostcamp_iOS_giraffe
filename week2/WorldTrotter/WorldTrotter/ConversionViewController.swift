@@ -44,11 +44,11 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         
         print("ConversionViewController loaded its view.")
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.view.backgroundColor = backgroundColor.getNextColor()
     }
-    
+
     /// 사용자가 숫자를 입력하지 않을 수도 있으므로 옵셔널로 선언
     var fahrenheitValue: Double? {
         didSet {
