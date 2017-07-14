@@ -70,7 +70,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="touchSignUpWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bbG-6F-NRa"/>
-                                                    <segue destination="iu3-gW-hRg" kind="presentation" id="JvS-TN-l3h"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -91,7 +90,9 @@
                     </view>
                     <connections>
                         <outlet property="idField" destination="GuS-qV-84x" id="MoK-Ze-FmL"/>
+                        <outlet property="loginStackView" destination="0N8-nT-a9u" id="N4n-I0-xd4"/>
                         <outlet property="passwordField" destination="8IC-sd-eeN" id="aaK-kA-cuZ"/>
+                        <segue destination="iu3-gW-hRg" kind="presentation" identifier="signUpSegue" id="bCL-rb-xdD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -135,18 +136,27 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="iu3-gW-hRg" id="UFE-s4-ZdD"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xhh-pe-x72">
                                                         <rect key="frame" x="0.0" y="38" width="232.5" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="iu3-gW-hRg" id="aQH-DM-rTg"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Check Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0wA-L2-9dF">
                                                         <rect key="frame" x="0.0" y="76" width="232.5" height="26.5"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="iu3-gW-hRg" id="7ha-rd-G1v"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                             </stackView>
@@ -163,6 +173,9 @@
                                                 <color key="backgroundColor" red="0.7003516555" green="0.73886460070000004" blue="0.86753922699999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="iu3-gW-hRg" id="af8-iX-Pfk"/>
+                                                </connections>
                                             </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="wm2-qz-Bxg">
                                                 <rect key="frame" x="0.0" y="490.5" width="343" height="30"/>
