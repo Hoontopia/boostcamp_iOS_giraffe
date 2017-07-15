@@ -14,6 +14,7 @@
 		C95C10CD1F065BCC00A9C74B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C95C10CB1F065BCC00A9C74B /* LaunchScreen.storyboard */; };
 		C95C10D81F065BCC00A9C74B /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95C10D71F065BCC00A9C74B /* LoginTests.swift */; };
 		C95C10E31F065BCC00A9C74B /* LoginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95C10E21F065BCC00A9C74B /* LoginUITests.swift */; };
+		C973B0201F190303004F74D7 /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B01F1F190303004F74D7 /* MyButton.swift */; };
 		C9A16E5D1F10F29800D7BC37 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A16E5C1F10F29800D7BC37 /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		C95C10DE1F065BCC00A9C74B /* LoginUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoginUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95C10E21F065BCC00A9C74B /* LoginUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUITests.swift; sourceTree = "<group>"; };
 		C95C10E41F065BCC00A9C74B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C973B01F1F190303004F74D7 /* MyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
 		C9A16E5C1F10F29800D7BC37 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,8 +103,9 @@
 			children = (
 				C95C10C21F065BCC00A9C74B /* AppDelegate.swift */,
 				C95C10C41F065BCC00A9C74B /* LoginViewController.swift */,
-				C95C10C61F065BCC00A9C74B /* Main.storyboard */,
 				C9A16E5C1F10F29800D7BC37 /* SignUpViewController.swift */,
+				C973B01F1F190303004F74D7 /* MyButton.swift */,
+				C95C10C61F065BCC00A9C74B /* Main.storyboard */,
 				C95C10C91F065BCC00A9C74B /* Assets.xcassets */,
 				C95C10CB1F065BCC00A9C74B /* LaunchScreen.storyboard */,
 				C95C10CE1F065BCC00A9C74B /* Info.plist */,
@@ -268,6 +271,7 @@
 				C9A16E5D1F10F29800D7BC37 /* SignUpViewController.swift in Sources */,
 				C95C10C51F065BCC00A9C74B /* LoginViewController.swift in Sources */,
 				C95C10C31F065BCC00A9C74B /* AppDelegate.swift in Sources */,
+				C973B0201F190303004F74D7 /* MyButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

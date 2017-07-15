@@ -14,6 +14,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var idField: UITextField!
     /// A Text field containing password
     @IBOutlet weak var passwordField: UITextField!
+    @IBOutlet weak var myButton: MyButton!
+    @IBOutlet weak var controlButtonForMyButton: UIButton!
     
     override func viewDidLoad() {
         /*
@@ -21,12 +23,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         idField.delegate = self
         passwordField.delegate = self
         */
+        myButton.addTarget(self, action: #selector(touchMyButton), for: .touchUpInside)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
         return true
+    }
+    
+    @IBAction func controlMyButton(_ sender: UIButton) {
+        if myButton.isEnabled {
+            myButton.disable()
+            sender.setTitle("Enable the button", for: .normal)
+        } else {
+            myButton.enable()
+            sender.setTitle("Disable the button", for: .normal)
+        }
     }
     
     /// Run when touching the Sign In button
@@ -50,6 +63,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     /// Run when touching the Sign Up button
     @IBAction func touchSignUp(sender: UIButton){
         print("touch up inside - sign up")
+    }
+    
+    func touchMyButton() {
+        print("touch up inside")
     }
 }
 
