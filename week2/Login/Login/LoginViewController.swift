@@ -41,13 +41,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
     @IBOutlet weak var loginStackView: UIStackView!
     
     var profileRequest = MyProfileRequest()
-    var userName: String? {
-        didSet {
-            if userName != nil {
-                performSegue(withIdentifier: "signUpSegue", sender: self)
-            }
-        }
-    }
+    var userName: String?
     
     override func viewDidLoad() {
         /*
@@ -99,7 +93,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
     /// Run when touching the Sign Up button
     @IBAction func touchSignUp(sender: UIButton){
         print("touch up inside - sign up")
-        performSegue(withIdentifier: "signUpSegue", sender: self)
+        
+        let signUpViewController = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+        present(signUpViewController, animated: true, completion: { () in
+            signUpViewController.id = self.userName })
     }
     
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
@@ -107,7 +104,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
         case .success(grantedPermissions: _, declinedPermissions: _, token: _):
             print("로그인 성공")
             getUserProfile()
-            
+            let signUpViewController = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+            present(signUpViewController, animated: true, completion: { () in
+                signUpViewController.idField.text = self.userName })
         case .cancelled:
             print("로그인 취소")
             
@@ -138,15 +137,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
             }
         }
         connection.start()
-    }
-    
-    // Sign Up 뷰 컨트롤러 id 텍스트 뷰에 이름 넣어줌
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard userName != nil else { return }
-
-        guard let dest = segue.destination as? SignUpViewController else { return }
-    
-        dest.id = userName
     }
 }
 

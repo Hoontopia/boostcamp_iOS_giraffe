@@ -21,10 +21,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var password: String?
     var checkPassword: String?
     
-    override func viewDidLoad() {
-        idField.text = id
-    }
-    
     @IBAction func selectProfileImage(_ sender: UITapGestureRecognizer) {
         // 이미지 피커 컨트롤러 생성
         let imagePicker = UIImagePickerController()
