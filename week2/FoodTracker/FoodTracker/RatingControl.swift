@@ -25,8 +25,11 @@ import UIKit
         }
     }
     
-    var rating = 0 {
+    var rating = 5 {
         didSet {
+            if rating < 0 {
+                rating = 4
+            }
             updateButtonSelectionStates()
         }
     }
@@ -42,21 +45,6 @@ import UIKit
     required init(coder: NSCoder) {
         super.init(coder: coder)
         setupButtons()
-    }
-    
-    //MARK: Button Action
-    func ratingButtonTapped(button: UIButton) {
-        guard let index = ratingButtons.index(of: button) else {
-            fatalError("The button, \(button), is not in the ratingButtons array: \(ratingButtons)")
-        }
-        
-        let selectedRating = index + 1
-        
-        if selectedRating == rating {
-            rating = 0
-        } else {
-            rating = selectedRating
-        }
     }
     
     //MARK: Private Methods
@@ -75,27 +63,18 @@ import UIKit
         let bundle = Bundle(for: type(of: self))
         let fieldStar = UIImage(named: "filledStar", in: bundle, compatibleWith: self.traitCollection)
         let emptyStar = UIImage(named: "emptyStar", in: bundle, compatibleWith: self.traitCollection)
-        let highlightedStar = UIImage(named: "highlightedStar", in: bundle, compatibleWith: self.traitCollection)
-        
-        for index in 0..<starCount {
+
+        for _ in 0..<starCount {
             let button = UIButton()
             //버튼 이미지 설정
             button.setImage(emptyStar, for: .normal)
             button.setImage(fieldStar, for: .selected)
-            button.setImage(highlightedStar, for: .highlighted)
-            button.setImage(highlightedStar, for: [.highlighted, .selected])
             
             // 제약 조건 추가
             // 자동 생성 제약조건 비활성화
             button.translatesAutoresizingMaskIntoConstraints = false
             button.heightAnchor.constraint(equalToConstant: starSize.height).isActive = true
             button.widthAnchor.constraint(equalToConstant: starSize.width).isActive = true
-            
-            button.accessibilityLabel = "Set \(index + 1) star rating"
-            
-            // 버튼 액션 추가(Target-Action 패턴)
-            // 타겟(self)는 현재 클래스의 인스턴스를 참조, #selector는 제공된 메소드의 값을 리턴
-            button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
 
             // 스택에 버튼 추가
             addArrangedSubview(button)
@@ -110,26 +89,6 @@ import UIKit
         for (index, button) in ratingButtons.enumerated() {
             // rating 미만 인덱스의 버튼은 모두 셀렉트 처리
             button.isSelected = index < rating
-            
-            let hintString: String?
-            if rating == index + 1 {
-                hintString = "Tap to reset the rating to zero."
-            } else {
-                hintString = nil
-            }
-            
-            let valueString: String
-            switch (rating) {
-            case 0:
-                valueString = "No rating set."
-            case 1:
-                valueString = "1 star set."
-            default:
-                valueString = "\(rating) stars set."
-            }
-            
-            button.accessibilityHint = hintString
-            button.accessibilityValue = valueString
         }
     }
 }

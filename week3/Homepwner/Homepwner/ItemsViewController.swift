@@ -20,6 +20,11 @@ class ItemsViewController: UITableViewController {
         
         tableView.contentInset = insets
         tableView.scrollIndicatorInsets = insets
+        
+        // tableView.rowHeight = 65
+        tableView.rowHeight = UITableViewAutomaticDimension
+        // 각 셀에 높이를 물어보는 대신 스크롤을 시작할 때까지 미룸
+        tableView.estimatedRowHeight = 65
     }
     
     @IBAction func addNewItem(sender: UIButton) {
@@ -109,18 +114,29 @@ class ItemsViewController: UITableViewController {
         // let cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
         
         // 가용 셀 풀에서 재사용 가능한 셀을 가져옴
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        // let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
         let lastRow = tableView.numberOfRows(inSection: 0) - 1
+        
+        cell.updateLabels()
         
         // 마지막 섹션의 마지막 행일 경우 고정 텍스트 출력
         if indexPath.row == lastRow {
-            cell.textLabel?.text = "No more items!"
-            cell.detailTextLabel?.text = ""
+            // cell.textLabel?.text = "No more items!"
+            // cell.detailTextLabel?.text = ""
+            cell.nameLabel.text = "No more items!"
+            cell.serialNumberLabel.text = ""
+            cell.valueLabel.text = ""
         } else {
             let item = itemStore.allItems[indexPath.row]
             
-            cell.textLabel?.text = item.name
-            cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+            // cell.textLabel?.text = item.name
+            // cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+            cell.nameLabel.text = item.name
+            cell.serialNumberLabel.text = item.serialNumber
+            cell.valueLabel.text = "$\(item.valueInDollars)"
+            cell.setCellColor(with: item.valueInDollars)
         }
         
         return cell
