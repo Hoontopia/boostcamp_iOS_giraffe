@@ -129,7 +129,6 @@ class MyButton: UIView, UIGestureRecognizerDelegate {
             print("매칭되는 이벤트 없음")
             return
         }
-        
     }
     
     func removeTarget(_ target: Any?, action: Selector?, for controlEvents: UIControlEvents) {
@@ -154,7 +153,7 @@ class MyButton: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    func sigleTap(gestureRecognizer: UIGestureRecognizer) {
-        print("button tapped")
-    }
+//    func sigleTap(gestureRecognizer: UIGestureRecognizer) {
+//        print("button tapped")
+//    }
 }
