@@ -8,14 +8,25 @@
 
 import UIKit
 
-enum FontSize: CGFloat {
-    case last = 17
-    case others = 20
+//enum FontSize: CGFloat {
+//    case last = 17
+//    case others = 20
+//}
+//
+//enum CellHeight: CGFloat {
+//    case last = 44
+//    case others = 60
+//}
+// rawValue 쓰지 말기
+
+struct FontSize {
+    static let last: CGFloat = 17
+    static let others: CGFloat = 20
 }
 
-enum CellHeight: CGFloat {
-    case last = 44
-    case others = 60
+struct CellHeight {
+    static let last: CGFloat = 44
+    static let others: CGFloat = 60
 }
 
 class ItemsViewController: UITableViewController {
@@ -65,10 +76,10 @@ class ItemsViewController: UITableViewController {
         let lastRow = splitedItemStore[lastSection].count - 1
         
         guard indexPath.section == lastSection && indexPath.row == (lastRow + 1) else {
-            return CellHeight.others.rawValue
+            return CellHeight.others
         }
         
-        return CellHeight.last.rawValue
+        return CellHeight.last
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,7 +95,8 @@ class ItemsViewController: UITableViewController {
             cell.detailTextLabel?.text = ""
         } else {
             let item = splitedItemStore[indexPath.section][indexPath.row]
-            let font = UIFont(name: (cell.textLabel?.font.fontName)!, size: FontSize.others.rawValue)
+//            let font = UIFont(name: (cell.textLabel?.font.fontName)!, size: FontSize.others)
+            let font = UIFont.systemFont(ofSize: FontSize.others)
             
             cell.textLabel?.text = item.name
             cell.textLabel?.font = font
