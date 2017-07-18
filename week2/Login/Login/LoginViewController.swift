@@ -94,9 +94,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
     @IBAction func touchSignUp(sender: UIButton){
         print("touch up inside - sign up")
         
-        let signUpViewController = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+        guard let signUpViewController = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController else { return }
         present(signUpViewController, animated: true, completion: { () in
-            signUpViewController.id = self.userName })
+            signUpViewController.idField.text = self.userName })
     }
     
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
@@ -104,7 +104,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
         case .success(grantedPermissions: _, declinedPermissions: _, token: _):
             print("로그인 성공")
             getUserProfile()
-            let signUpViewController = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+            guard let signUpViewController = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController")
+                as? SignUpViewController else { return }
             present(signUpViewController, animated: true, completion: { () in
                 signUpViewController.idField.text = self.userName })
         case .cancelled:
