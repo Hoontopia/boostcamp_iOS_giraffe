@@ -56,23 +56,23 @@ class ItemsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
                             forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let item = itemStore.allItems[indexPath.row]
-            
-            let title = "Delete \(item.name)?"
-            let message = "Are you sure you want to delete this item?"
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
-                self.itemStore.removeItem(item)
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            })
-            
-            alertController.addAction(cancelAction)
-            alertController.addAction(deleteAction)
-            
-            present(alertController, animated: true, completion: nil)
-        }
+        guard editingStyle == .delete else { return }
+        
+        let item = itemStore.allItems[indexPath.row]
+        
+        let title = "Delete \(item.name)?"
+        let message = "Are you sure you want to delete this item?"
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+            self.itemStore.removeItem(item)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        })
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
