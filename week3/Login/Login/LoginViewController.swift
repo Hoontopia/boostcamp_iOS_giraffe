@@ -67,6 +67,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func touchMyButton() {
         print("touch up inside")
+        myButton.isSelected = !myButton.isSelected
     }
 }
 

@@ -9,31 +9,29 @@
 
 import UIKit
 
-enum State: String {
-    case highlighted
-    case disabled
-    case normal
-    case selected
-    case selectedHighlighted
-}
-
 struct AlphaValue {
     static let normalState: CGFloat = 1.0
     static let otherState: CGFloat = 0.3
 }
 
+struct StateText {
+    static let normal: String = "normal"
+    static let selected: String = "selected"
+    static let highlighted: String = "highlighted"
+    static let selectedHighlighted: String = "selectedHighlighted"
+}
+
 class MyButton: UIView, UIGestureRecognizerDelegate {
     var backgroundImageView: UIImageView = UIImageView()
     var titleLable: UILabel = UILabel()
-    var textStateColors: [State: UIColor] = [
-        State.normal: UIColor.yellow,
-        State.selected: UIColor.green,
-        State.highlighted: UIColor.white,
-        State.selectedHighlighted: UIColor.red
-    ]
     var isSelected: Bool = false
     var isEnabled: Bool = true
     var backgroundImageColor: UIColor = UIColor.black
+    var controlState: UIControlState = .normal {
+        didSet {
+            setTextStatusWith(controlState)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,9 +67,8 @@ class MyButton: UIView, UIGestureRecognizerDelegate {
         titleLable.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         titleLable.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         titleLable.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        titleLable.text = State.normal.rawValue
         titleLable.textAlignment = .center
-        titleLable.textColor = textStateColors[State.normal]
+        setTextStatusWith(controlState)
     }
     
     func enable() {
@@ -90,11 +87,9 @@ class MyButton: UIView, UIGestureRecognizerDelegate {
         self.alpha = AlphaValue.otherState
         
         if isSelected {
-            titleLable.text = State.selectedHighlighted.rawValue
-            titleLable.textColor = textStateColors[State.selectedHighlighted]
+            controlState = [.selected, .highlighted]
         } else {
-            titleLable.text = State.highlighted.rawValue
-            titleLable.textColor = textStateColors[State.highlighted]
+            controlState = .highlighted
         }
     }
     
@@ -108,14 +103,11 @@ class MyButton: UIView, UIGestureRecognizerDelegate {
         }
         
         self.alpha = AlphaValue.normalState
-        isSelected = !isSelected
         
         if isSelected {
-            titleLable.text = State.selected.rawValue
-            titleLable.textColor = textStateColors[State.selected]
+            controlState = .selected
         } else {
-            titleLable.text = State.normal.rawValue
-            titleLable.textColor = textStateColors[State.normal]
+            controlState = .normal
         }
     }
     
@@ -150,6 +142,25 @@ class MyButton: UIView, UIGestureRecognizerDelegate {
         default:
             print("매칭되는 이벤트 없음")
             return
+        }
+    }
+    
+    func setTextStatusWith(_ controlState: UIControlState) {
+        switch controlState {
+        case UIControlState.normal:
+            titleLable.text = StateText.normal
+            titleLable.textColor = UIColor.yellow
+        case UIControlState.selected:
+            titleLable.text = StateText.selected
+            titleLable.textColor = UIColor.green
+        case UIControlState.highlighted:
+            titleLable.text = StateText.highlighted
+            titleLable.textColor = UIColor.white
+        case UIControlState([.selected, .highlighted]):
+            titleLable.text = StateText.selectedHighlighted
+            titleLable.textColor = UIColor.red
+        default:
+            break
         }
     }
     
