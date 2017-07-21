@@ -58,10 +58,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
         view.addSubview(loginButton) // 제약조건 주기 전에 서브 뷰로 추가 먼저 할 것 !
         
         // 제약조건 추가
-        NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal, toItem: loginStackView, attribute: .bottom, multiplier: 1.0, constant: 0.0).isActive = true
-        NSLayoutConstraint(item: loginButton, attribute: .centerX, relatedBy: .equal, toItem: loginStackView, attribute: .centerX, multiplier: 1.0, constant: 0.0).isActive = true
-        
-        getUserProfile()
+        NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal,
+                           toItem: loginStackView, attribute: .bottom,
+                           multiplier: 1.0, constant: 0.0).isActive = true
+        NSLayoutConstraint(item: loginButton, attribute: .centerX, relatedBy: .equal,
+                           toItem: loginStackView, attribute: .centerX,
+                           multiplier: 1.0, constant: 0.0).isActive = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -91,7 +93,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
     /// Run when touching the Sign Up button
     @IBAction func touchSignUp(sender: UIButton){
         print("touch up inside - sign up")
-        performSegue(withIdentifier: "signUpSegue", sender: self)
+        
+        guard let signUpViewController = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as? SignUpViewController else { return }
+        present(signUpViewController, animated: true, completion: { () in
+            signUpViewController.idField.text = self.userName })
     }
     
     func loginButtonDidCompleteLogin(_ loginButton: LoginButton, result: LoginResult) {
@@ -99,9 +104,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
         case .success(grantedPermissions: _, declinedPermissions: _, token: _):
             print("로그인 성공")
             getUserProfile()
-            
+            guard let signUpViewController = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController")
+                as? SignUpViewController else { return }
+            present(signUpViewController, animated: true, completion: { () in
+                signUpViewController.idField.text = self.userName })
         case .cancelled:
             print("로그인 취소")
+            
         case .failed( _):
             print("로그인 실패")
         }
@@ -129,15 +138,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, LoginButtonDel
             }
         }
         connection.start()
-    }
-    
-    // Sign Up 뷰 컨트롤러 id 텍스트 뷰에 이름 넣어줌
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard userName != nil else { return }
-
-        guard let dest = segue.destination as? SignUpViewController else { return }
-        
-        dest.id = userName
     }
 }
 

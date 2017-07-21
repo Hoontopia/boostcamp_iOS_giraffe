@@ -92,7 +92,6 @@
                         <outlet property="idField" destination="GuS-qV-84x" id="MoK-Ze-FmL"/>
                         <outlet property="loginStackView" destination="0N8-nT-a9u" id="N4n-I0-xd4"/>
                         <outlet property="passwordField" destination="8IC-sd-eeN" id="aaK-kA-cuZ"/>
-                        <segue destination="iu3-gW-hRg" kind="presentation" identifier="signUpSegue" id="bCL-rb-xdD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -102,7 +101,7 @@
         <!--Sign Up View Controller-->
         <scene sceneID="BEz-RO-Ks9">
             <objects>
-                <viewController id="iu3-gW-hRg" customClass="SignUpViewController" customModule="Login" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpViewController" id="iu3-gW-hRg" customClass="SignUpViewController" customModule="Login" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Lrj-cp-SPp"/>
                         <viewControllerLayoutGuide type="bottom" id="tGc-bC-WBt"/>
