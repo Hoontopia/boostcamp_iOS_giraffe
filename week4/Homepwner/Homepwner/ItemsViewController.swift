@@ -14,20 +14,21 @@ class ItemsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 상단 상태 바와 겹치지 않도록 컨텐트 인셋 추가
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
-        
-        tableView.contentInset = insets
-        tableView.scrollIndicatorInsets = insets
-        
         // tableView.rowHeight = 65
         tableView.rowHeight = UITableViewAutomaticDimension
         // 각 셀에 높이를 물어보는 대신 스크롤을 시작할 때까지 미룸
         tableView.estimatedRowHeight = 65
+        
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
-    @IBAction func addNewItem(sender: UIButton) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+    }
+    
+    @IBAction func addNewItem(sender: UIBarButtonItem) {
 //        let lastRow = tableView.numberOfRows(inSection: 0)
 //        let indexPath = IndexPath(row: lastRow, section: 0)
 //        
@@ -40,16 +41,6 @@ class ItemsViewController: UITableViewController {
             let indexPath = IndexPath(row: index, section: 0)
             
             tableView.insertRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
-    @IBAction func toggleEditingMode(sender: UIButton) {
-        if isEditing {
-            sender.setTitle("Edit", for: .normal)
-            setEditing(false, animated: true)
-        } else {
-            sender.setTitle("Done", for: .normal)
-            setEditing(true, animated: true)
         }
     }
     
@@ -145,5 +136,16 @@ class ItemsViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    // MARK: - Navigation
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "ShowItem" else { return }
+        guard let detailViewController = segue.destination as? DetailViewController else { return }
+        guard let row = tableView.indexPathForSelectedRow?.row else { return }
+        
+        let selectedItem = itemStore.allItems[row]
+        detailViewController.item = selectedItem
     }
 }

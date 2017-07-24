@@ -20,8 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 의존 관계 역전 원칙에 따라 고수준 객체인 뷰 컨트롤러에 의존성 주입(프로퍼티로 전달)
         let itemStore = ItemStore()
         
-        let itemsController = window!.rootViewController as! ItemsViewController
-        itemsController.itemStore = itemStore
+        if let navigationController = window?.rootViewController as? UINavigationController {
+            if let itemsController = navigationController.topViewController
+                as? ItemsViewController {
+                itemsController.itemStore = itemStore
+            }
+        }
         
         return true
     }
