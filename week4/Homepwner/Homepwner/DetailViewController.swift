@@ -16,8 +16,9 @@ class DetailViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var valueTextField: CustomTextField!
     @IBOutlet weak var dateLabel: UILabel!
     
-    var item: Item! {
+    var item: Item = Item() {
         didSet {
+            print("Item is changed")
             navigationItem.title = item.name
         }
     }

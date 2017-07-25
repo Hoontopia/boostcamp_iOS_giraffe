@@ -9,7 +9,11 @@
 import UIKit
 
 class ItemsViewController: UITableViewController {
-    var itemStore: ItemStore!
+    var itemStore: ItemStore = ItemStore() {
+        didSet {
+            print("ItemStore is Changed")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
