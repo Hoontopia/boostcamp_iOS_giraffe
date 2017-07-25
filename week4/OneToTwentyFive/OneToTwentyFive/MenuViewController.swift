@@ -32,14 +32,6 @@ class MenuViewController: UIViewController {
             })
     }
     
-    @IBAction func playButtonTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "showPlaySegue", sender: self)
-    }
-    
-    @IBAction func showHistory(_ sender: UIButton) {
-        performSegue(withIdentifier: "showHistorySegue", sender: self)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let playViewController = segue.destination as? PlayViewController {
             playViewController.recordStore = recordStore

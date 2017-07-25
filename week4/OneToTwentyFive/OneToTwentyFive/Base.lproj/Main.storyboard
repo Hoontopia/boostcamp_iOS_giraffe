@@ -57,7 +57,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="playButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oV4-6z-Dr1"/>
+                                            <segue destination="0dp-bD-q1S" kind="show" id="yBH-Ru-XQm"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gQP-ML-PaB">
@@ -68,7 +68,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="showHistory:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3P9-K8-Qx4"/>
+                                            <segue destination="UGM-RE-y2c" kind="show" id="Itq-ya-ZB2"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -89,8 +89,6 @@
                     <navigationItem key="navigationItem" id="aEc-Hq-1Co"/>
                     <connections>
                         <outlet property="gameTitleLabel" destination="Gbc-wi-1Oz" id="mKU-7K-lyC"/>
-                        <segue destination="0dp-bD-q1S" kind="show" identifier="showPlaySegue" id="leo-P7-hMk"/>
-                        <segue destination="UGM-RE-y2c" kind="show" identifier="showHistorySegue" id="EO2-TR-Pnj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -625,6 +623,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="EO2-TR-Pnj"/>
+        <segue reference="Itq-ya-ZB2"/>
     </inferredMetricsTieBreakers>
 </document>
