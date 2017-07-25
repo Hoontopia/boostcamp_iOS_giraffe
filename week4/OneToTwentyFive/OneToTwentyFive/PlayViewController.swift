@@ -20,6 +20,7 @@ class PlayViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var historyButton: UIButton!
     @IBOutlet weak var recordLabel: UILabel!
+    @IBOutlet weak var startButton: UIButton!
     
     private var timer: Timer?
     private var time: Int = 0
@@ -41,6 +42,8 @@ class PlayViewController: UIViewController {
         didSet {
             if oldValue == GameStatus.maxNumber {
                 clearGame()
+                addGameRecord()
+                setGame()
             }
         }
     }
@@ -48,10 +51,12 @@ class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        distributeRandomNumbers(to: numberButtons)
+        setGame()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         setBestRecord()
     }
     
@@ -75,11 +80,31 @@ class PlayViewController: UIViewController {
         timeLabel.text = "\(minutes):\(seconds):\(milliseconds)"
     }
     
+    @IBAction func startGame(_ sender: UIButton) {
+        startButton.isHidden = true
+        buttonStackView.isHidden = false
+        historyButton.alpha = 0.3
+        historyButton.isUserInteractionEnabled = false
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(increaseTime), userInfo: nil, repeats: true)
+    }
+    
     private func clearGame() {
         timer?.invalidate()
         historyButton.alpha = 1.0
         historyButton.isUserInteractionEnabled = true
-        addGameRecord()
+    }
+    
+    private func setGame() {
+        for button in numberButtons {
+            button.alpha = 1.0
+            button.isUserInteractionEnabled = true
+        }
+        
+        nextCheckNumber = 1
+        buttonStackView.isHidden = true
+        startButton.isHidden = false
+        
+        distributeRandomNumbers(to: numberButtons)
     }
     
     private func addGameRecord() {
@@ -108,20 +133,12 @@ class PlayViewController: UIViewController {
         self.present(aleartController, animated: true, completion: nil)
     }
     
-    func setBestRecord() {
+    private func setBestRecord() {
         if let bestRecord = recordStore.getBestRecord() {
             recordLabel.text = "\(bestRecord.getName()) " + bestRecord.getClearTime()
         } else {
             recordLabel.text = "- --:--:--"
         }
-    }
-    
-    @IBAction func startGame(_ sender: UIButton) {
-        sender.isHidden = true
-        buttonStackView.isHidden = false
-        historyButton.alpha = 0.3
-        historyButton.isUserInteractionEnabled = false
-        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(increaseTime), userInfo: nil, repeats: true)
     }
     
     @IBAction func selectNumber(_ sender: UIButton) {
@@ -133,7 +150,9 @@ class PlayViewController: UIViewController {
             return
         }
         
-        sender.backgroundColor = UIColor.white
+        sender.alpha = 0.0
+        sender.isUserInteractionEnabled = false
+        
         nextCheckNumber += 1
     }
     
