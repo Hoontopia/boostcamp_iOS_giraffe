@@ -39,7 +39,7 @@ class PlayViewController: UIViewController {
     
     private var nextCheckNumber: Int = 1 {
         didSet {
-            if oldValue == 2 {
+            if oldValue == GameStatus.maxNumber {
                 clearGame()
             }
         }
