@@ -66,16 +66,14 @@ class ViewController: UIViewController {
 //            self.updateOffScreenLabel()
 //        })
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.3,
-           initialSpringVelocity: 1.0, options: [],
-           animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 1.0, options: [], animations: {
             self.currentQuestionLabel.alpha = 0
             self.nextQuestionLabel.alpha = 1
 
             self.view.layoutIfNeeded()
-            }, completion: { _ in
-                swap(&self.currentQuestionLabel, &self.nextQuestionLabel)
-                swap(&self.currentQuestionLabelCenterXConstraint,
+        }, completion: { _ in
+            swap(&self.currentQuestionLabel, &self.nextQuestionLabel)
+            swap(&self.currentQuestionLabelCenterXConstraint,
                      &self.nextQuestionLabelCenterXConstraint)
                 
                 self.updateOffScreenLabel()
