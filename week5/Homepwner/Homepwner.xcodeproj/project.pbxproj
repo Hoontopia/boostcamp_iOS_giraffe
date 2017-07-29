@@ -18,6 +18,7 @@
 		C973B0401F1A22D4004F74D7 /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B03F1F1A22D4004F74D7 /* ItemsViewController.swift */; };
 		C973B0421F1A2378004F74D7 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B0411F1A2378004F74D7 /* Item.swift */; };
 		C973B0441F1A281A004F74D7 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C973B0431F1A281A004F74D7 /* ItemStore.swift */; };
+		C9D0408A1F2C4D7D001CF3E2 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D040891F2C4D7D001CF3E2 /* ImageStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		C973B03F1F1A22D4004F74D7 /* ItemsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		C973B0411F1A2378004F74D7 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		C973B0431F1A281A004F74D7 /* ItemStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
+		C9D040891F2C4D7D001CF3E2 /* ImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				C973B0431F1A281A004F74D7 /* ItemStore.swift */,
 				C920B6A01F2505650020350E /* DetailViewController.swift */,
 				C920B6A41F25203E0020350E /* DatePickerViewController.swift */,
+				C9D040891F2C4D7D001CF3E2 /* ImageStore.swift */,
 			);
 			path = Homepwner;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 				C973B0421F1A2378004F74D7 /* Item.swift in Sources */,
 				C973B0441F1A281A004F74D7 /* ItemStore.swift in Sources */,
 				C920B6A51F25203E0020350E /* DatePickerViewController.swift in Sources */,
+				C9D0408A1F2C4D7D001CF3E2 /* ImageStore.swift in Sources */,
 				C920B6A11F2505650020350E /* DetailViewController.swift in Sources */,
 				C973B0401F1A22D4004F74D7 /* ItemsViewController.swift in Sources */,
 				C96229E71F1B8C5C0067516E /* ItemCell.swift in Sources */,

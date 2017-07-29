@@ -15,10 +15,15 @@ class ItemsViewController: UITableViewController {
         }
     }
     
+    var imageStore: ImageStore = ImageStore() {
+        didSet {
+            print("ImageStore is changed")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // tableView.rowHeight = 65
         tableView.rowHeight = UITableViewAutomaticDimension
         // 각 셀에 높이를 물어보는 대신 스크롤을 시작할 때까지 미룸
         tableView.estimatedRowHeight = 65
@@ -33,11 +38,6 @@ class ItemsViewController: UITableViewController {
     }
     
     @IBAction func addNewItem(sender: UIBarButtonItem) {
-//        let lastRow = tableView.numberOfRows(inSection: 0)
-//        let indexPath = IndexPath(row: lastRow, section: 0)
-//        
-//        tableView.insertRows(at: [indexPath], with: .automatic)
-//        데이터 소스에서 반환한 행과 테이블 뷰의 행 수 불일치
         
         let newItem = itemStore.createItem()
         
@@ -47,33 +47,24 @@ class ItemsViewController: UITableViewController {
             tableView.insertRows(at: [indexPath], with: .automatic)
         }
     }
-    
-    // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView,
-                            titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-        return "Remove"
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
-                            forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
+   
+    // MARK: - Navigation
 
-        let item = itemStore.allItems[indexPath.row]
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "ShowItem" else { return }
+        guard let detailViewController = segue.destination as? DetailViewController else { return }
+        guard let row = tableView.indexPathForSelectedRow?.row else { return }
         
-        let title = "Delete \(item.name)?"
-        let message = "Are you sure you want to delete this item?"
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
-            self.itemStore.removeItem(item)
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-        })
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-        
-        present(alertController, animated: true, completion: nil)
-    
+        let selectedItem = itemStore.allItems[row]
+        detailViewController.item = selectedItem
+        detailViewController.imageStore = imageStore
+    }
+}
+
+// MARK: - Table view data source
+extension ItemsViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return itemStore.allItems.count + 1
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -93,27 +84,7 @@ class ItemsViewController: UITableViewController {
         itemStore.moveItem(fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
     }
     
-    /* 목적지로의 행 이동을 막는 메소드 */
-    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        guard proposedDestinationIndexPath.row != tableView.numberOfRows(inSection: 0) - 1
-            else { return sourceIndexPath }
-        
-        return proposedDestinationIndexPath
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return itemStore.allItems.count + 1
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // let cell = UITableViewCell(style: .value1, reuseIdentifier: "UITableViewCell")
-        
-        // 가용 셀 풀에서 재사용 가능한 셀을 가져옴
-        // let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        
-        // let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as! ItemCell
-        // 옵셔널 강제 추출 제거
         let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath)
             as? ItemCell ?? ItemCell(style: .default, reuseIdentifier: "ItemCell")
         
@@ -121,18 +92,13 @@ class ItemsViewController: UITableViewController {
         
         cell.updateLabels()
         
-        // 마지막 섹션의 마지막 행일 경우 고정 텍스트 출력
         if indexPath.row == lastRow {
-            // cell.textLabel?.text = "No more items!"
-            // cell.detailTextLabel?.text = ""
             cell.nameLabel.text = "No more items!"
             cell.serialNumberLabel.text = ""
             cell.valueLabel.text = ""
         } else {
             let item = itemStore.allItems[indexPath.row]
             
-            // cell.textLabel?.text = item.name
-            // cell.detailTextLabel?.text = "$\(item.valueInDollars)"
             cell.nameLabel.text = item.name
             cell.serialNumberLabel.text = item.serialNumber
             cell.valueLabel.text = "$\(item.valueInDollars)"
@@ -142,14 +108,47 @@ class ItemsViewController: UITableViewController {
         return cell
     }
     
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "ShowItem" else { return }
-        guard let detailViewController = segue.destination as? DetailViewController else { return }
-        guard let row = tableView.indexPathForSelectedRow?.row else { return }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
+                            forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
         
-        let selectedItem = itemStore.allItems[row]
-        detailViewController.item = selectedItem
+        let item = itemStore.allItems[indexPath.row]
+        
+        let title = "Delete \(item.name)?"
+        let message = "Are you sure you want to delete this item?"
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+            [unowned self] _ in
+            self.itemStore.removeItem(item)
+            self.imageStore.deleteImageFor(key: item.itemKey)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        })
+        
+        alertController.addAction(deleteAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+}
+
+// MARK: - Table view delegate
+extension ItemsViewController {
+    override func tableView(_ tableView: UITableView,
+                            titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Remove"
+    }
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        guard proposedDestinationIndexPath.row != tableView.numberOfRows(inSection: 0) - 1
+            else { return sourceIndexPath }
+        
+        return proposedDestinationIndexPath
+    }
+
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        guard indexPath.row == (tableView.numberOfRows(inSection: 0) - 1) else {
+            return indexPath
+        }
+        
+        return nil
     }
 }

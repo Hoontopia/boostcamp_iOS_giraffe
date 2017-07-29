@@ -109,7 +109,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="N6I-NR-n6u">
-                                <rect key="frame" x="24" y="72" width="327" height="587"/>
+                                <rect key="frame" x="24" y="72" width="327" height="543"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="reL-DV-Vfc">
                                         <rect key="frame" x="0.0" y="0.0" width="327" height="30"/>
@@ -172,13 +172,16 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ioy-Yp-Pbg">
-                                        <rect key="frame" x="0.0" y="114" width="327" height="435"/>
+                                        <rect key="frame" x="0.0" y="114" width="327" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="248" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Km3-jA-9QF">
+                                        <rect key="frame" x="0.0" y="142.5" width="327" height="362.5"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQe-5U-yDC">
-                                        <rect key="frame" x="0.0" y="557" width="327" height="30"/>
+                                        <rect key="frame" x="0.0" y="513" width="327" height="30"/>
                                         <state key="normal" title="Change Date"/>
                                         <connections>
                                             <segue destination="2SZ-Bv-ExT" kind="show" id="2Hj-py-Bsm"/>
@@ -190,14 +193,30 @@
                                     <constraint firstItem="AhP-N8-svS" firstAttribute="leading" secondItem="0gT-dE-ZkI" secondAttribute="leading" id="muh-Hx-bDa"/>
                                 </constraints>
                             </stackView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Le-rP-mSV">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="TZ5-Lf-Dhf"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="camera" id="KEz-Tb-e1v">
+                                        <connections>
+                                            <action selector="takePicture:" destination="yPI-CC-XmD" id="3Ls-yX-1tN"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="7Le-rP-mSV" firstAttribute="top" secondItem="N6I-NR-n6u" secondAttribute="bottom" constant="8" id="0VF-IK-xnl"/>
+                            <constraint firstAttribute="trailing" secondItem="7Le-rP-mSV" secondAttribute="trailing" id="5xF-Ys-sVN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="N6I-NR-n6u" secondAttribute="trailing" constant="8" id="YSE-2P-ngc"/>
                             <constraint firstItem="N6I-NR-n6u" firstAttribute="leading" secondItem="ukZ-yR-Mvj" secondAttribute="leadingMargin" constant="8" id="lzM-f2-ubZ"/>
-                            <constraint firstItem="N6I-NR-n6u" firstAttribute="top" secondItem="4Wt-ad-eay" secondAttribute="bottom" constant="8" id="u16-WZ-ED6"/>
-                            <constraint firstItem="CQz-xu-yGH" firstAttribute="top" secondItem="N6I-NR-n6u" secondAttribute="bottom" constant="8" id="vDw-ZO-uDe"/>
+                            <constraint firstItem="CQz-xu-yGH" firstAttribute="top" secondItem="7Le-rP-mSV" secondAttribute="bottom" id="s8j-iA-VtS"/>
+                            <constraint firstItem="N6I-NR-n6u" firstAttribute="top" secondItem="4Wt-ad-eay" secondAttribute="bottom" constant="8" id="wle-c1-7hE"/>
+                            <constraint firstItem="7Le-rP-mSV" firstAttribute="leading" secondItem="ukZ-yR-Mvj" secondAttribute="leading" id="y8M-xb-qYe"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="flx-pc-vVC" appends="YES" id="MRs-6p-eYB"/>
@@ -205,6 +224,7 @@
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="Ioy-Yp-Pbg" id="JLY-RW-RWA"/>
+                        <outlet property="imageView" destination="Km3-jA-9QF" id="qCL-kD-ioI"/>
                         <outlet property="nameTextField" destination="0gT-dE-ZkI" id="1GR-BM-HMq"/>
                         <outlet property="serialTextField" destination="AhP-N8-svS" id="5eS-hh-URp"/>
                         <outlet property="valueTextField" destination="7Bb-Ad-4Hv" id="jAk-TD-RRz"/>

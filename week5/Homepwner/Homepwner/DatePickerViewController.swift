@@ -8,16 +8,21 @@
 
 import UIKit
 
-class DatePickerViewController: UIViewController {
-    @IBOutlet weak var datePicker: UIDatePicker!
+protocol DatePickable {
+    func pickedDate(_ date: Date)
+}
 
+class DatePickerViewController: UIViewController, DatePickable {
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
+    var delegate: DatePickable?
+    
     @IBAction func applyDate(_ sender: UIBarButtonItem) {
-        guard let count = self.navigationController?.viewControllers.count else { return }
-        guard let detailViewController = self.navigationController?.viewControllers[count - 2]
-            as? DetailViewController else { return }
-        
-        detailViewController.item.dateCreated = datePicker.date
-        
+        pickedDate(datePicker.date)
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func pickedDate(_ date: Date) {
+        delegate?.pickedDate(date)
     }
 }
