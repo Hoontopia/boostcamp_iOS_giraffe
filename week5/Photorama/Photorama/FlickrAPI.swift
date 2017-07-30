@@ -77,7 +77,7 @@ struct FlickrAPI {
         return flickrURL(method: .recentPhotos, parameters: ["extras": "url_h, date_taken"])
     }
     
-    static func photosFromJSONData(_ data: Data) -> PhotosResult {
+    static func photos(FromJSON data: Data) -> PhotosResult {
         do {
             let jsonObject: Any = try JSONSerialization.jsonObject(with: data, options: [])
             
@@ -90,12 +90,12 @@ struct FlickrAPI {
             var finalPhotos = [Photo]()
             
             for photoJSON in photosArray {
-                if let photo = photosFromJSONObject(photoJSON) {
+                if let photo = photo(fromJSON: photoJSON) {
                     finalPhotos.append(photo)
                 }
             }
             
-            guard finalPhotos.count != 0 || photosArray.count <= 0 else {
+            guard !finalPhotos.isEmpty || photosArray.isEmpty else {
                 return .failure(FlickrError.invalidJSONData)
             }
             
@@ -105,7 +105,7 @@ struct FlickrAPI {
         }
     }
     
-    static func photosFromJSONObject(_ json: [String: Any]) -> Photo? {
+    static func photo(fromJSON json: [String: Any]) -> Photo? {
         guard let photoID = json[JSONElement.id] as? String,
             let title = json[JSONElement.title] as? String,
             let dateString = json[JSONElement.datetaken] as? String,

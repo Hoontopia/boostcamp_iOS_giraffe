@@ -27,14 +27,12 @@ class PhotosViewController: UIViewController {
                 print("Successfully found \(photos.count) recent photos.")
                 guard let firstPhoto = photos.first else { return }
                 
-                self.photoStore.fetchImageFor(photo: firstPhoto) {
+                self.photoStore.fetchImage(for: firstPhoto) {
                     [unowned self] (imageResult) -> () in
                     
                     switch imageResult {
                     case let .success(image):
-                        OperationQueue.main.addOperation {
-                             self.imageView.image = image
-                        }
+                        self.imageView.image = image
                     case let .failure(error):
                         print("Error downloading image: \(error)")
                     }
