@@ -9,18 +9,8 @@
 import UIKit
 
 class PhotosViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView! {
-        didSet {
-            collectionView.dataSource = photoDataSource
-        }
-    }
-    
-    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout! {
-        didSet {
-            flowLayout.itemSize = CGSize(width: collectionView.bounds.width,
-                                         height: collectionView.bounds.height)
-        }
-    }
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     let photoDataSource = PhotoDataSource()
     
@@ -33,6 +23,9 @@ class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        collectionView.dataSource = photoDataSource
+        flowLayout.itemSize = CGSize(width: collectionView.bounds.width,
+                                     height: collectionView.bounds.height)
         
         photoStore.fetchRecentPhotos() { [unowned self] (photoResult) in
             DispatchQueue.global().async {
