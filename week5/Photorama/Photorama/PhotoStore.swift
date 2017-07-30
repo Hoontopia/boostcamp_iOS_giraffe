@@ -19,7 +19,7 @@ enum PhotoError: Error {
 }
 
 class PhotoStore {
-    let session: URLSession = {
+    private let session: URLSession = {
         let config = URLSessionConfiguration.default
         return URLSession(configuration: config)
     }()
@@ -37,13 +37,15 @@ class PhotoStore {
             
             let result = self.processRecentPhotosRequest(data: data, error: error)
             
-            completion(result)
+            OperationQueue.main.addOperation {
+                completion(result)
+            }
         }
         
         task.resume()
     }
     
-    func processRecentPhotosRequest(data: Data?, error: Error?) -> PhotosResult {
+    private func processRecentPhotosRequest(data: Data?, error: Error?) -> PhotosResult {
         guard let jsonData = data else {
             guard let error = error else {
                 return .failure(FlickrError.unexpectedError)
@@ -51,26 +53,37 @@ class PhotoStore {
             return .failure(error)
         }
         
-        return FlickrAPI.photosFromJSONData(jsonData)
+        return FlickrAPI.photos(JSONData: jsonData)
     }
     
-    func fetchImageFor(photo: Photo, completion: @escaping (ImageResult) -> Void) {
+    func fetchImage(for photo: Photo, completion: @escaping (ImageResult) -> Void) {
+        if let image = photo.image {
+            OperationQueue.main.addOperation {
+                completion(.success(image))
+            }
+        }
+        
         let photoURL = photo.remoteURL
         let request = URLRequest(url: photoURL)
+        
         let task = session.dataTask(with: request) {
-            [unowned self] (data, response, error) -> () in
+            (data, response, error) -> () in
+            
             let result = self.processImageRequest(data: data, error: error)
             
             if case let .success(image) = result {
                 photo.image = image
             }
             
-            completion(result)
+            OperationQueue.main.addOperation {
+                completion(result)
+            }
         }
+        
         task.resume()
     }
     
-    func processImageRequest(data: Data?, error: Error?) -> ImageResult {
+    private func processImageRequest(data: Data?, error: Error?) -> ImageResult {
         guard let imageData = data, let image = UIImage(data: imageData) else {
             if data == nil {
                 return .failure(PhotoError.invalidData)
