@@ -53,14 +53,22 @@ class PhotoStore {
             return .failure(error)
         }
         
-        return FlickrAPI.photos(FromJSON: jsonData)
+        return FlickrAPI.photos(JSONData: jsonData)
     }
     
     func fetchImage(for photo: Photo, completion: @escaping (ImageResult) -> Void) {
+        if let image = photo.image {
+            OperationQueue.main.addOperation {
+                completion(.success(image))
+            }
+        }
+        
         let photoURL = photo.remoteURL
         let request = URLRequest(url: photoURL)
+        
         let task = session.dataTask(with: request) {
-            [unowned self] (data, response, error) -> () in
+            (data, response, error) -> () in
+            
             let result = self.processImageRequest(data: data, error: error)
             
             if case let .success(image) = result {
@@ -71,6 +79,7 @@ class PhotoStore {
                 completion(result)
             }
         }
+      
         task.resume()
     }
     
