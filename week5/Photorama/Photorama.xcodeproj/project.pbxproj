@@ -18,6 +18,7 @@
 		C9D040B01F2DAA54001CF3E2 /* PhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D040AF1F2DAA54001CF3E2 /* PhotoDataSource.swift */; };
 		C9D040B21F2DB07E001CF3E2 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D040B11F2DB07E001CF3E2 /* PhotoCollectionViewCell.swift */; };
 		C9D040B41F2DC554001CF3E2 /* PhotoInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D040B31F2DC554001CF3E2 /* PhotoInfoViewController.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		C9D040AF1F2DAA54001CF3E2 /* PhotoDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDataSource.swift; sourceTree = "<group>"; };
 		C9D040B11F2DB07E001CF3E2 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		C9D040B31F2DC554001CF3E2 /* PhotoInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoInfoViewController.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

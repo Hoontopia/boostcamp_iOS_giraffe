@@ -28,4 +28,3 @@ extension Photo: Equatable {
         return lhs.photoID == rhs.photoID
     }
 }
-
